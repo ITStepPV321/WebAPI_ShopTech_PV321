@@ -34,13 +34,15 @@ namespace WebAPI_ShopTech_PV321.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            return Ok();
+            var product = _productsService.GetById(id);
+            return Ok(product);
         }
 
         // POST api/<ProductsController>
         [HttpPost]
         public IActionResult Create([FromBody] CreateProductDto product)
         {
+            _productsService.Create(product);
             return Ok();
         }
 
@@ -48,6 +50,7 @@ namespace WebAPI_ShopTech_PV321.Controllers
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] ProductDto product)
         {
+            _productsService.Edit(product);
             return Ok();
         }
 
@@ -55,6 +58,7 @@ namespace WebAPI_ShopTech_PV321.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+            _productsService.Delete(id);
             return Ok();
         }
     }
