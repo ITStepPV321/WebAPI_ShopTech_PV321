@@ -8,16 +8,13 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.20" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.20" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\WebAPI_ShopTech_PV321.Infrastructure\WebAPI_ShopTech_PV321.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="DTOs\User\" />
   </ItemGroup>
 
 </Project>
