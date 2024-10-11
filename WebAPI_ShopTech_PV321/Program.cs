@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using WebAPI_ShopTech_PV321.Core.Helpers;
 using WebAPI_ShopTech_PV321.Core.Interfaces;
 using WebAPI_ShopTech_PV321.Core.Sevices;
-using WebAPI_ShopTech_PV321.Infrastructure.Data;
+using WebAPI_ShopTech_PV321.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,11 +11,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 string connection = builder.Configuration.GetConnectionString("ShopTechDbConnection");
-builder.Services.AddDbContext<ShopTechAPI_PV321>(options => {
-    options.UseSqlServer(connection);
-    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-});
+//builder.Services.AddDbContext<ShopTechAPI_PV321>(options => {
+//    options.UseSqlServer(connection);
+//    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+//});
 
+builder.Services.AddDbContextCustom(connection);
 
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
