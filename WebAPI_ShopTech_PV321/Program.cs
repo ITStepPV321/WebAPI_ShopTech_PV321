@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WebAPI_ShopTech_PV321.Core.Helpers;
 using WebAPI_ShopTech_PV321.Core.Interfaces;
 using WebAPI_ShopTech_PV321.Core.Sevices;
 using WebAPI_ShopTech_PV321.Infrastructure;
+using WebAPI_ShopTech_PV321.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +18,11 @@ string connection = builder.Configuration.GetConnectionString("ShopTechDbConnect
 //    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 //});
 
-builder.Services.AddDbContextCustom(connection);
 
+builder.Services.AddDbContextCustom(connection);
+//builder.Services.AddIdentity<IdentityUser, IdentityRole>(options=>options.SignIn.RequireConfirmedAccount=true).
+//    AddEntityFrameworkStores<ShopTechAPI_PV321>();
+builder.Services.AddIdentityCustom();
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
 

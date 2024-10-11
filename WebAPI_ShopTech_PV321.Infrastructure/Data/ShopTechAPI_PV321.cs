@@ -1,14 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebAPI_ShopTech_PV321.Infrastructure.Entities;
 
 namespace WebAPI_ShopTech_PV321.Infrastructure.Data
 {
-    public class ShopTechAPI_PV321:DbContext
+    public class ShopTechAPI_PV321:IdentityDbContext<IdentityUser>
     {
         public ShopTechAPI_PV321(DbContextOptions<ShopTechAPI_PV321> options) : base(options)
         {
