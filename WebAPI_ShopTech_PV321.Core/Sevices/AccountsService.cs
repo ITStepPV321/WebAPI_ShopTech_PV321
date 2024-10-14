@@ -1,41 +1,72 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 using WebAPI_ShopTech_PV321.Core.DTOs.User;
-using WebAPI_ShopTech_PV321.Core.Interfaces;
 
-namespace WebAPI_ShopTech_PV321.Core.Sevices
+using WEBAPI_ShopTech_PV321.Core.Interfaces;
+
+namespace WEBAPI_ShopTech_PV321.Core.Sevices
 {
     public class AccountsService : IAccountsService
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        public AccountsService(UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+
+        public AccountsService(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
-            _userManager= userManager;
-            _signInManager= signInManager;
+            _userManager = userManager;
+            _signInManager = signInManager;
         }
+
         public async Task<IdentityUser> Get(string id)
         {
-            var user= await _userManager.FindByIdAsync(id);
-            if (user == null) {
+            IdentityUser? user = await _userManager.FindByIdAsync(id);
+
+            if (user == null)
+            {
                 throw new Exception("User not found by id");
             }
+
             return user;
         }
 
-        public Task<string> Login(LoginDto loginDto)
+        public async Task Login(LoginDto loginDto)
         {
-            throw new NotImplementedException();
+            var user = await _userManager.FindByEmailAsync(loginDto.Email!);
+
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            var res = await _userManager.CheckPasswordAsync(user, loginDto.Password!);
+
+            if (res)
+            {
+                throw new Exception("Wrong password");
+            }
+
+            await _signInManager.SignInAsync(user, true);
         }
 
-        public Task Logout()
+        public async Task Logout()
         {
-            throw new NotImplementedException();
+            await _signInManager.SignOutAsync();
         }
 
-        public Task Register(RegisterDto registerDto)
+        public async Task Register(RegisterDto registerDto)
         {
-            throw new NotImplementedException();
+            IdentityUser user = new IdentityUser()
+            {
+                UserName = registerDto.Username,
+                Email = registerDto.Email,
+            };
+
+            var result = await _userManager.CreateAsync(user, registerDto.Password);
+
+            if (!result.Succeeded)
+            {
+                throw new Exception($"{String.Join(",", result.Errors)}");
+            }
         }
     }
 }

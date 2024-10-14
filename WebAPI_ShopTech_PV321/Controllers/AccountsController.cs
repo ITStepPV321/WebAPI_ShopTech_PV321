@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI_ShopTech_PV321.Core.Interfaces;
-using WebAPI_ShopTech_PV321.Core.Sevices;
+using WebAPI_ShopTech_PV321.Core.DTOs.User;
+using WEBAPI_ShopTech_PV321.Core.Interfaces;
+
+
 
 namespace WebAPI_ShopTech_PV321.Controllers
 {
@@ -10,18 +13,50 @@ namespace WebAPI_ShopTech_PV321.Controllers
     public class AccountsController : ControllerBase
     {
         private readonly IAccountsService _accountsService;
+
         public AccountsController(IAccountsService accountsService)
         {
             _accountsService = accountsService;
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(string id)
+        public async Task<IActionResult> Get(string id)
         {
-            var product = _accountsService.Get(id);
-            return Ok(product);
+            IdentityUser user = await _accountsService.Get(id);
+
+            return Ok(user);
         }
 
+        [HttpPost("registration")]
+        public async Task<IActionResult> Post([FromBody] RegisterDto registerDto)
+        {
+            await _accountsService.Register(registerDto);
 
+            return Ok();
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> LoginPost([FromBody] LoginDto loginDto)
+        {
+            await _accountsService.Login(loginDto);
+
+            return Ok();
+        }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> LogoutPost()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                await _accountsService.Logout();
+
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+
+        }
     }
 }

@@ -5,6 +5,8 @@ using WebAPI_ShopTech_PV321.Core.Interfaces;
 using WebAPI_ShopTech_PV321.Core.Sevices;
 using WebAPI_ShopTech_PV321.Infrastructure;
 using WebAPI_ShopTech_PV321.Infrastructure.Data;
+using WEBAPI_ShopTech_PV321.Core.Interfaces;
+using WEBAPI_ShopTech_PV321.Core.Sevices;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +32,7 @@ builder.Services.AddAutoMapper(typeof(MapperProfile));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProductsService, ProductsService>();
+builder.Services.AddScoped<IAccountsService, AccountsService>();
 
 var app = builder.Build();
 
