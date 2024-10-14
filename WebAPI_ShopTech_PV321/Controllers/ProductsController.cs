@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using WebAPI_ShopTech_PV321.Core.DTOs;
 using WebAPI_ShopTech_PV321.Core.Interfaces;
 
@@ -23,6 +25,7 @@ namespace WebAPI_ShopTech_PV321.Controllers
         //[HttpGet("/all")] //GET: root/all
         // GET: api/products
         [HttpGet]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Get()
         {
             var products = _productsService.GetAll();

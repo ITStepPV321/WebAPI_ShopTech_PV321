@@ -38,9 +38,9 @@ namespace WebAPI_ShopTech_PV321.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> LoginPost([FromBody] LoginDto loginDto)
         {
-            await _accountsService.Login(loginDto);
+            var tocken = await _accountsService.Login(loginDto);
 
-            return Ok();
+            return Ok(tocken);
         }
 
         [HttpPost("logout")]
