@@ -20,7 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-string connection = builder.Configuration.GetConnectionString("ShopTechDbConnection");
+string connection = builder.Configuration.GetConnectionString("ShopTechDbConnectionAzure");
 //builder.Services.AddDbContext<ShopTechAPI_PV321>(options => {
 //    options.UseSqlServer(connection);
 //    options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
@@ -84,6 +84,17 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey=new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
+
+builder.Services.AddCors(options => options.AddPolicy("CorsPolicy",
+    builder =>
+    {
+        //builder.WithOrigins("http://localhost:3000");
+        builder.AllowAnyHeader();
+        builder.AllowAnyMethod();
+        builder.AllowAnyOrigin();
+    }
+
+    ));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -93,6 +104,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseRouting();
+app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

@@ -33,6 +33,7 @@ namespace WebAPI_ShopTech_PV321.Controllers
                 
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         // GET api/<ProductController>/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
