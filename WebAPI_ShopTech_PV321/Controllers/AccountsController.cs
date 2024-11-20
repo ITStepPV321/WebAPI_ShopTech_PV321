@@ -8,7 +8,7 @@ using WEBAPI_ShopTech_PV321.Core.Interfaces;
 
 namespace WebAPI_ShopTech_PV321.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/accounts")]
     [ApiController]
     public class AccountsController : ControllerBase
     {

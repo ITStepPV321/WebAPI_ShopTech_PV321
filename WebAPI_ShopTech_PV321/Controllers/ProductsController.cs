@@ -8,7 +8,7 @@ using WebAPI_ShopTech_PV321.Core.Interfaces;
 
 namespace WebAPI_ShopTech_PV321.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/products")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
@@ -25,7 +25,7 @@ namespace WebAPI_ShopTech_PV321.Controllers
         //[HttpGet("/all")] //GET: root/all
         // GET: api/products
         [HttpGet]
-        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Get()
         {
             var products = _productsService.GetAll();
@@ -43,7 +43,7 @@ namespace WebAPI_ShopTech_PV321.Controllers
         }
 
         // POST api/<ProductsController>
-        [HttpPost]
+        [HttpPost("create")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Create([FromBody] CreateProductDto product)
         {
@@ -52,8 +52,8 @@ namespace WebAPI_ShopTech_PV321.Controllers
         }
 
         // PUT api/<ProductsController>/5
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] ProductDto product)
+        [HttpPut("edit")]
+        public IActionResult Update([FromBody] ProductDto product)
         {
             _productsService.Edit(product);
             return Ok();
