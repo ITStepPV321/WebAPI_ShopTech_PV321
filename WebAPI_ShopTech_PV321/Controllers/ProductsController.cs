@@ -25,7 +25,7 @@ namespace WebAPI_ShopTech_PV321.Controllers
         //[HttpGet("/all")] //GET: root/all
         // GET: api/products
         [HttpGet]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Get()
         {
             var products = _productsService.GetAll();
@@ -33,7 +33,7 @@ namespace WebAPI_ShopTech_PV321.Controllers
                 
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         // GET api/<ProductController>/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
